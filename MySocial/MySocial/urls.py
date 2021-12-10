@@ -2,11 +2,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from MySocial import settings, router
+from MySocial import settings
 from MySocial.docs import SchemaView
 
 urlpatterns = [
-                  path('api/v1/', include(router.router.urls)),
+                  path('api/v1/', include("MySocial.router")),
                   path('admin', admin.site.urls),
                   path(
                       "api-docs/",
