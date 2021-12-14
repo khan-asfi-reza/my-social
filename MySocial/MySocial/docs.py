@@ -8,8 +8,13 @@ class Gen(OpenAPISchemaGenerator):
         schema = super().get_schema(request, public)
         try:
             for definition in schema.definitions.keys():
-                if hasattr(schema.definitions[definition]._NP_serializer.Meta, "swagger_example"):
-                    examples = schema.definitions[definition]._NP_serializer.Meta.swagger_example
+                if hasattr(
+                    schema.definitions[definition]._NP_serializer.Meta,
+                    "swagger_example",
+                ):
+                    examples = schema.definitions[
+                        definition
+                    ]._NP_serializer.Meta.swagger_example
                     for example in examples.keys():
                         if example in schema.definitions[definition]["properties"]:
                             schema.definitions[definition]["properties"][example][
