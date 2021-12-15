@@ -7,15 +7,10 @@ class UUIDBaseModel(models.Model):
     """
     Abstract Model for Each Model
     """
-    uuid = models.UUIDField(unique=False,
-                            default=uuid4,
-                            editable=False)
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True
-    )
+
+    uuid = models.UUIDField(unique=False, default=uuid4, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
