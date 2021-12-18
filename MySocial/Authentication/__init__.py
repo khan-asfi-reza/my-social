@@ -1,4 +1,3 @@
-
 # OTP Model
 # class OTP(models.Model):
 #     # One Time Code
@@ -14,4 +13,3 @@
 #     # Use Case of otp
 #     use_case = models.SmallIntegerField(choices=[(1, "Verify"), (2, "Forget Password"), (3, "Others")], default=1)
 #     verified = models.BooleanField(default=False)
-
