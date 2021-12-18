@@ -4,13 +4,17 @@ from django.urls import path, re_path
 
 # from Chat.consumers import OnlineOfflineConsumer, InboxConsumer, MessageConsumer, GetOnlineConsumer
 
-application = ProtocolTypeRouter({
-    'websocket': AuthMiddlewareStack(
-        URLRouter([
-            # path('ws/status/', OnlineOfflineConsumer),
-            # path('ws/inbox/', InboxConsumer),
-            # path('ws/chat/<username>/', MessageConsumer),
-            # re_path('ws/onlineusers/', GetOnlineConsumer),
-        ])
-    ),
-})
+application = ProtocolTypeRouter(
+    {
+        "websocket": AuthMiddlewareStack(
+            URLRouter(
+                [
+                    # path('ws/status/', OnlineOfflineConsumer),
+                    # path('ws/inbox/', InboxConsumer),
+                    # path('ws/chat/<username>/', MessageConsumer),
+                    # re_path('ws/onlineusers/', GetOnlineConsumer),
+                ]
+            )
+        ),
+    }
+)
