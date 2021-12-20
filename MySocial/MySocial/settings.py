@@ -29,28 +29,28 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("SECRET_KEY", "SECRET_KEY")
 
 # Stripe api key
-STRIPE_KEY = os.environ.get('STRIPE_KEY')
+STRIPE_KEY = os.environ.get("STRIPE_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'phonenumber_field',
-    'django_filters',
-    'drf_yasg',
-    'Accounts',
+    "channels",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "rest_framework",
+    "phonenumber_field",
+    "django_filters",
+    "drf_yasg",
+    "Accounts",
     # 'Admin',
     # 'Chat',
     # 'Profile',
@@ -62,34 +62,34 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'MySocial.urls'
+ROOT_URLCONF = "MySocial.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
-ASGI_APPLICATION = 'MySocial.routing.application'
+ASGI_APPLICATION = "MySocial.routing.application"
 
 #
 # CHANNEL_LAYERS = {
@@ -99,9 +99,9 @@ ASGI_APPLICATION = 'MySocial.routing.application'
 #     },
 # }
 
-WSGI_APPLICATION = 'MySocial.wsgi.application'
+WSGI_APPLICATION = "MySocial.wsgi.application"
 
-AUTH_USER_MODEL = 'Accounts.User'
+AUTH_USER_MODEL = "Accounts.User"
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -117,35 +117,31 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
 SWAGGER_SETTINGS = {
-   'SECURITY_DEFINITIONS': {
-        'Bearer': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header'
-        }
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {"type": "apiKey", "name": "Authorization", "in": "header"}
     }
 }
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'Asia/Dhaka'
+TIME_ZONE = "Asia/Dhaka"
 
 USE_I18N = True
 
@@ -158,22 +154,22 @@ USE_TZ = True
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ]
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
 
 
-TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER', "")
-TWILIO_SID = os.environ.get('TWILIO_SID', "")
-TWILIO_TOKEN = os.environ.get('TWILIO_TOKEN', "")
+TWILIO_PHONE_NUMBER = os.environ.get("TWILIO_PHONE_NUMBER", "")
+TWILIO_SID = os.environ.get("TWILIO_SID", "")
+TWILIO_TOKEN = os.environ.get("TWILIO_TOKEN", "")
 
-STATIC_URL = '/Static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'Storage', 'Static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'Storage', 'Media')
+STATIC_URL = "/Static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "Storage", "Static")
+MEDIA_ROOT = os.path.join(BASE_DIR, "Storage", "Media")
 MEDIA_URL = f"/Media/"
 
 # Beta Version 1
