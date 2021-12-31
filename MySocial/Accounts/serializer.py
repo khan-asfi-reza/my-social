@@ -67,13 +67,14 @@ class UserSerializerPublic(ModelSerializer):
     """
     User Serializer For Public View
     """
-    full_name = CharField(source='get_full_name')
+    full_name = CharField(source='get_full_name', read_only=True)
 
     class Meta:
         model = User
         fields = [
             "uuid",
             "username",
+            "full_name"
         ]
 
 
