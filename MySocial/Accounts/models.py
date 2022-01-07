@@ -50,16 +50,31 @@ class User(AbstractBaseUser,
                                 null=False,
                                 blank=False,
                                 unique=True)
+    # User's Name
+    first_name = models.CharField(max_length=128,
+                                  null=True,
+                                  blank=True,
+                                  )
+    last_name = models.CharField(max_length=128,
+                                 null=True,
+                                 blank=True,
+                                 )
     # Phone Number
-    phone_number = PhoneNumberField()
+    phone_number = PhoneNumberField(unique=True)
     # Email
-    email = models.EmailField(editable=True, null=True, blank=True, unique=True)
+    email = models.EmailField(unique=True)
     # Check for verification
     is_verified = models.BooleanField(default=False)
-
+    # Profile Picture
+    profile_picture_url = models.CharField(
+        null=True,
+        blank=True,
+        default=None,
+        max_length=512
+    )
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['gender', 'phone_number']
+    REQUIRED_FIELDS = ['phone_number', 'email']
 
     # calling user manager class
     objects = UserManager()
@@ -69,6 +84,9 @@ class User(AbstractBaseUser,
 
     def get_username(self):
         return self.username
+
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
     def __str__(self):
         return self.username
