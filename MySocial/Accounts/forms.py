@@ -10,7 +10,9 @@ class UserAdminCreationForm(forms.ModelForm):
     fields, plus a repeated password.
     """
     # Name is username
-    username = forms.CharField(label='Name')
+    username = forms.CharField(label='UserName')
+    first_name = forms.CharField(label='First Name')
+    last_name = forms.CharField(label='Last Name')
     # Phone number input
     phone_number = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Phone'}),
                                    label="Phone number", required=True)
@@ -22,7 +24,7 @@ class UserAdminCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'phone_number', 'country_code', 'email', 'gender',)
+        fields = ('username', 'phone_number', 'email', )
 
     # Clean Email, checks if email is used or not
     def clean_email(self):
@@ -68,7 +70,7 @@ class UserAdminChangeForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('phone_number', 'username', 'email', 'active', 'admin', 'gender')
+        fields = ('phone_number', 'username', 'email',)
 
     def clean_password(self):
         # Check that the two password entries match
@@ -85,12 +87,9 @@ class AdminCreationForm(UserAdminCreationForm):
         fields, plus a repeated password.
     """
 
-    admin = forms.BooleanField(required=False)
-    staff = forms.BooleanField(required=False)
-
     class Meta:
         model = User
-        fields = ('phone_number', 'email', 'username', 'gender', 'admin', 'staff')
+        fields = ('phone_number', 'email', 'username', )
 
     def save(self, commit=True):
         # Save the provided password in hashed format
