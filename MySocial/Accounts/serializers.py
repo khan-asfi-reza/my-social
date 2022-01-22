@@ -22,7 +22,7 @@ class UserSerializer(ModelSerializer):
     preview user's personal details
     """
     query_set = User.objects.all()
-    uuid = UUIDRelatedField(read_only=True)
+
     username = CharField(trim_whitespace=True,
                          validators=[
                              UniqueValidator(
@@ -54,6 +54,10 @@ class UserSerializer(ModelSerializer):
         fields = ['uuid', 'phone_number', 'first_name', 'last_name', 'password', 'username', 'email', ]
         # Read only Fields
         read_only_fields = ['uuid']
+        # Example
+        swagger_example = {
+            "phone_number": "+41524204242"
+        }
 
     def create(self, validated_data):
         # Create User
