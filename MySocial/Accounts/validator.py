@@ -3,7 +3,10 @@ from django.core.validators import RegexValidator
 
 
 # Phone Number Validator
-def phoneNumberValidator(phone_number):
+def phoneNumberValidator(phone_number: str):
+    """
+    Validates Phone Number
+    """
     if phone_number is None:
         raise ValidationError('User must have a phone number')
 
