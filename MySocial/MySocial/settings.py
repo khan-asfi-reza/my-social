@@ -47,18 +47,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
     'phonenumber_field',
     'django_filters',
+    'drf_yasg',
     'Accounts',
-    'Admin',
-    'Chat',
-    'Profile',
-    'Content',
-    'Forum',
-    'corsheaders',
-    'storages',
-    'Payments'
+    # 'Admin',
+    # 'Chat',
+    # 'Profile',
+    # 'Content',
+    # 'Forum',
+    # 'corsheaders',
+    # 'storages',
+    # 'Payments'
 ]
 
 MIDDLEWARE = [
@@ -91,12 +91,13 @@ TEMPLATES = [
 ]
 ASGI_APPLICATION = 'MySocial.routing.application'
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {"hosts": [os.environ.get("REDIS_URL", "redis://localhost:6379")]},
-    },
-}
+#
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {"hosts": [os.environ.get("REDIS_URL", "redis://localhost:6379")]},
+#     },
+# }
 
 WSGI_APPLICATION = 'MySocial.wsgi.application'
 
