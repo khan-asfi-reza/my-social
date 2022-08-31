@@ -80,6 +80,11 @@ class UserSerializerPublic(ModelSerializer):
             "username",
             "full_name"
         ]
+        read_only_fields = [
+            "uuid",
+            "username",
+            "full_name"
+        ]
 
 
 # Change Password Serializer
