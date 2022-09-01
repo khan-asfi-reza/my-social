@@ -7,9 +7,8 @@ from .manager import UserManager
 
 
 # Custom User Model
-class User(AbstractUser, PermissionsMixin, UUIDBaseModel):
-    # Name / User username
-    username = models.CharField(max_length=128, null=False, blank=False, unique=True)
+class User(AbstractUser, UUIDBaseModel):
+
     # Phone Number
     phone_number = PhoneNumberField(unique=True)
     # Check for verification
