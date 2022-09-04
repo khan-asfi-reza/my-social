@@ -1,0 +1,36 @@
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "MySocial.settings"
+python_files = "test_*.py"
+pythonpath = "./MySocial"
+env_override_existing_values = 1
+env_files = [".test.env",]
+filterwarnings = [
+"ignore::django.utils.deprecation.RemovedInDjango41Warning",
+"ignore::django.utils.deprecation.RemovedInDjango50Warning",
+"ignore::UserWarning"]
+testpaths = ["tests"]
+
+[tool.mypy]
+ignore_missing_imports = true
+exclude=['tests']
+
+[[tool.mypy.overrides]]
+module = "*.migrations.*"
+ignore_errors = true
+
+[tool.flake8]
+ignore = ['E203', 'E266', 'E501', 'W503', 'F403', 'F401', 'F405']
+max-line-length = 88
+max-complexity = 18
+select = ['B','C','E','F','W','T4','B9']
+
+[tool.black]
+line-length = 88
+extend-exclude = '''
+/(
+  # The following are specific to Black, you probably don't want those.
+  | virtualenv
+  | venv
+  | docs
+)/
+'''
