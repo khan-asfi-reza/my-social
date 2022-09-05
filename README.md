@@ -2,3 +2,8 @@
 <h1>🔥My-Social</h1>
 <p>A django based social media</p>
 </div>
+
+## Applications
+
+1. `MySocial`: SocialMedia Backend
+2. `Storage`: Storage Service API / CDN Built With FastAPI
