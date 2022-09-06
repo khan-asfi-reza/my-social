@@ -10,6 +10,9 @@ test.sqlite3
 __pycache__/
 *.py[cod]
 *$py.class
+Storage/store/*.webp
+Storage/store/*.jpg
+Storage/store/*.png
 
 # C extensions
 *.so
