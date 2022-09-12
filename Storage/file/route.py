@@ -1,5 +1,5 @@
 from bson import ObjectId
-from fastapi import routing, File, UploadFile, Request
+from fastapi import routing, File, UploadFile, Request, HTTPException
 import aiofiles
 from uuid import uuid4
 
@@ -45,18 +45,34 @@ async def create_upload_file(request: Request, file: UploadFile = File(...)):
         {"_id": ObjectId(file.inserted_id)}
     )
     file_id = str(new_file["_id"])
-    url = get_url(request, f"/file/get/{file_id}")
+    url = get_url(request, f"/file/{file_id}")
 
-    return {"status": "201", "url": url, "id": file_id, "mime_type": mime_type}
+    return {"status": 201, "url": url, "id": file_id, "mime_type": mime_type}
 
 
-@router.get("/get/{file_id}", response_class=FileResponse)
+@router.get("/{file_id}", response_class=FileResponse)
 async def get_file(file_id: str):
+    """
+    Get File using file id
+    """
     file = await storage_collection.find_one({"_id": ObjectId(file_id)})
     if file:
         file_name = file["file_path"]
-        print(file_name)
         destination_file_path = STORAGE_DIR / file_name
-        print(destination_file_path)
         return destination_file_path
     return None
+
+
+@router.delete("/{file_id}")
+async def delete_file(file_id: str):
+    """
+    Delete file using file id
+    """
+    file = await storage_collection.find_one({"_id": ObjectId(file_id)})
+    if file:
+        await storage_collection.delete_one({"_id": ObjectId(file_id)})
+        return {
+            "status": 203,
+            "content": "DELETED"
+        }
+    raise HTTPException(status_code=404)
