@@ -1,7 +1,7 @@
 from drf_yasg import openapi
 from drf_yasg.generators import OpenAPISchemaGenerator
 from drf_yasg.views import get_schema_view
-
+from rest_framework.permissions import AllowAny
 
 class Gen(OpenAPISchemaGenerator):
     def get_schema(self, request=None, public=False):
@@ -34,6 +34,7 @@ SchemaView = get_schema_view(
         contact=openapi.Contact(email="info@khanasfireza.dev"),
         license=openapi.License(name="EULA"),
     ),
+    permission_classes=[AllowAny],
     generator_class=Gen,
     public=True,
 )
