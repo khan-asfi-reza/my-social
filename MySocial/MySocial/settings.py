@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "django_filters",
     "drf_yasg",
     "Accounts",
+    "Profile"
     # 'Admin',
     # 'Chat',
     # 'Profile',
@@ -60,6 +61,8 @@ INSTALLED_APPS = [
     # 'storages',
     # 'Payments'
 ]
+
+STORAGE_API = "http://127.0.0.1:9000/api/v1"
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -157,8 +160,10 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ]
 }
+
 
 CORS_ORIGIN_ALLOW_ALL = True
 
