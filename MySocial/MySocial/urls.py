@@ -7,8 +7,8 @@ from MySocial.docs import SchemaView
 
 urlpatterns = (
     [
-        path("api/v1/", include("MySocial.router")),
-        path("admin", admin.site.urls),
+        path("api/v1/", include("MySocial.routes")),
+        path("admin/", admin.site.urls),
         path(
             "api-docs/",
             SchemaView.with_ui("swagger", cache_timeout=0),
