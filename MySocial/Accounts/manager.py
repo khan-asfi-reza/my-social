@@ -27,12 +27,12 @@ class UserManager(BaseUserManager):
         return user
 
     # Creates staff user
-    def create_staffuser(self, phone_number, gender, username, password, email=None):
+    def create_staffuser(self, phone_number, username, password, email=None):
         # Creates a non super admin
         user = self.create_user(phone_number=phone_number, email=email, password=password,
                                 username=username,
                                 )
-        user.staff = True
+        user.is_staff = True
         user.verified = True
         user.save(using=self._db)
         return user
@@ -44,6 +44,7 @@ class UserManager(BaseUserManager):
                                 username=username,
                                 )
         user.is_superuser = True
+        user.is_staff = True
         user.is_active = True
         user.verified = True
         user.save(using=self._db)
