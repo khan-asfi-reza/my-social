@@ -11,6 +11,7 @@ from rest_framework.validators import UniqueValidator
 from phonenumber_field.serializerfields import PhoneNumberField
 
 from MySocial.serializers import UUIDRelatedField
+from Profile.serializers import ProfilePictureSerializer, ProfileSerializer
 
 User = get_user_model()
 
@@ -31,6 +32,7 @@ class UserSerializer(ModelSerializer):
                              )
                          ]
                          )
+    profile = ProfilePictureSerializer(read_only=True)
     email = EmailField(validators=[
         UniqueValidator(
             queryset=query_set,
@@ -51,9 +53,9 @@ class UserSerializer(ModelSerializer):
         # Model User
         model = User
         # Fields
-        fields = ['uuid', 'phone_number', 'first_name', 'last_name', 'password', 'username', 'email', ]
+        fields = ['uuid', 'phone_number', 'profile', 'first_name', 'last_name', 'password', 'username', 'email', ]
         # Read only Fields
-        read_only_fields = ['uuid']
+        read_only_fields = ['uuid', 'profile']
         # Example
         swagger_example = {
             "phone_number": "+41524204242"
@@ -67,9 +69,9 @@ class UserSerializer(ModelSerializer):
         return user
 
 
-class UserSerializerPublic(ModelSerializer):
+class UserPublicBaseSerializer(ModelSerializer):
     """
-    User Serializer For Public View
+    Base Serializer
     """
     full_name = CharField(source='get_full_name', read_only=True)
 
@@ -78,13 +80,29 @@ class UserSerializerPublic(ModelSerializer):
         fields = [
             "uuid",
             "username",
-            "full_name"
+            "full_name",
+            "profile"
         ]
         read_only_fields = [
             "uuid",
             "username",
-            "full_name"
+            "full_name",
+            "profile"
         ]
+
+
+class UserSerializerPublic(UserPublicBaseSerializer):
+    """
+    User Serializer For Public View
+    """
+    profile = ProfilePictureSerializer(read_only=True)
+
+
+class UserSerializerPublicDetails(UserPublicBaseSerializer):
+    """
+    User Serializer For Public Detail View
+    """
+    profile = ProfileSerializer(read_only=True)
 
 
 # Change Password Serializer
