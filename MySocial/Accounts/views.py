@@ -1,18 +1,19 @@
 from rest_framework import mixins
+from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
-
-from MySocial.views import UUIDModelViewSet
+from rest_framework.mixins import (CreateModelMixin, UpdateModelMixin, DestroyModelMixin, ListModelMixin,
+                                   RetrieveModelMixin)
+from MySocial.views import UUIDGenericViewSet
 from .permission import IsPostOrIsAuthenticated
-from .serializers import UserSerializer, UserSerializerPublic
+from .serializers import UserSerializer, UserSerializerPublic, UserSerializerPublicDetails
 from .models import User
 
 
-class UserCRUDViewSet(mixins.CreateModelMixin,
-                      mixins.UpdateModelMixin,
-                      mixins.DestroyModelMixin,
-                      mixins.ListModelMixin,
-                      GenericViewSet
+class UserCRUDViewSet(CreateModelMixin,
+                      UpdateModelMixin,
+                      DestroyModelMixin,
+                      ListModelMixin,
+                      UUIDGenericViewSet
                       ):
     """
     get: Returns Authenticated User's Details
@@ -42,15 +43,37 @@ class UserCRUDViewSet(mixins.CreateModelMixin,
         return Response(serialized.data)
 
     def update(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
+        kwargs.pop('partial', True)
+        return super(UserCRUDViewSet, self).update(request, partial=True, *args, **kwargs)
 
 
-class UserPublicViewSet(mixins.RetrieveModelMixin,
-                        mixins.ListModelMixin,
-                        UUIDModelViewSet
+class UserPublicViewSet(RetrieveModelMixin,
+                        ListModelMixin,
+                        UUIDGenericViewSet
                         ):
     """
     User ViewSet for Public View Only
     """
+
     serializer_class = UserSerializerPublic
     queryset = User.objects.all()
+    swagger_schema_settings = {
+        "details": {
+            "method": "get",
+            "responses": {
+                200: UserSerializerPublicDetails()
+            }
+        },
+        "list": {
+            "responses": {
+                200: UserSerializerPublicDetails()
+            }
+        }
+    }
+
+    @action(methods=["get"], detail=True)
+    def details(self, request, *args, **kwargs):
+        serializer = UserSerializerPublicDetails(
+            instance=self.get_object()
+        )
+        return Response(serializer.data)
