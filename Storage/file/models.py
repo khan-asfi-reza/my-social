@@ -12,12 +12,15 @@ class FileUploadResponse(BaseModel):
     url: str
     id: str
     mime_type: str
+    created_at: datetime
+    updated_at: datetime
+    size: int
 
 
 ImageFileResponse = {
-   200: {
-       "content": {"image/png": {}}
-   }
+    200: {
+        "content": {"image/png": {}}
+    }
 }
 
 
@@ -25,8 +28,9 @@ class FileModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     file_path: str = Field(...)
     mime_type: str = Field(...)
-    created_at: datetime = datetime.now()
-    updated_at: datetime = datetime.now()
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
+    size: int = Field(...)
 
     class Config:
         allow_population_by_field_name = True
@@ -35,7 +39,8 @@ class FileModel(BaseModel):
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {"file_id": "d0608943-bd65-40b5-b62c-5ac32662ea1724cde70d-064b-49dd-a7c9-beb127040123",
-                        "file_path": "/media/d0608943-bd65-40b5-b62c-5ac32662ea1724cde70d-064b-49dd-a7c9-beb127040123.png"}}
+                        "file_path": "/media/d0608943-bd65-40b5-b62c-5ac32662ea1724cde70d-064b-49dd-a7c9-beb127040123"
+                                     ".png"}}
 
     @root_validator
     def number_validator(cls, values):
