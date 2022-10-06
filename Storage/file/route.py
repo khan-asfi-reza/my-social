@@ -1,3 +1,5 @@
+import datetime
+
 from bson import ObjectId
 from fastapi import routing, File, UploadFile, Request, HTTPException
 import aiofiles
@@ -8,17 +10,18 @@ from Storage.file.response import FileResponse
 from Storage.db import storage_collection
 from Storage.file.models import FileUploadResponse
 from Storage.file.utils import get_compressed_file, get_url
+from Storage.prefix import FILE_API_PREFIX
 from Storage.settings import STORAGE_DIR
 
 router = routing.APIRouter(
-    prefix="/file"
+    prefix=FILE_API_PREFIX
 )
 
 
 @router.post("/upload", response_model=FileUploadResponse)
 async def create_upload_file(request: Request, file: UploadFile = File(...)):
     # Get File Name and extension
-    content, mime_type, file_extension = await get_compressed_file(file)
+    content, mime_type, file_extension, size = await get_compressed_file(file)
     # File Name
     file_name = (
         f"{str(uuid4())}"
@@ -35,7 +38,10 @@ async def create_upload_file(request: Request, file: UploadFile = File(...)):
 
     db_data = {
         "file_path": file_name,
-        "mime_type": mime_type
+        "mime_type": mime_type,
+        "size": size,
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
     }
     # Insert data into mongodb
     file = await storage_collection.insert_one(
@@ -45,9 +51,36 @@ async def create_upload_file(request: Request, file: UploadFile = File(...)):
         {"_id": ObjectId(file.inserted_id)}
     )
     file_id = str(new_file["_id"])
-    url = get_url(request, f"/file/{file_id}")
+    url = get_url(request, f"/{file_id}")
 
-    return {"status": 201, "url": url, "id": file_id, "mime_type": mime_type}
+    return {
+        "status": 201,
+        "url": url,
+        "id": file_id,
+        "mime_type": mime_type,
+        "created_at": new_file["created_at"],
+        "updated_at": new_file["updated_at"],
+        "size": size
+    }
+
+
+@router.get("/details/{file_id}")
+async def file_details(file_id: str, request: Request):
+    """
+    Get File Info
+    """
+    file = await storage_collection.find_one({"_id": ObjectId(file_id)})
+    if file:
+        url = get_url(request, f"/file/{file_id}")
+        return {
+            "status": 201,
+            "url": url,
+            "id": file_id,
+            "mime_type": file["mime_type"],
+            "created_at": file["created_at"],
+            "updated_at": file["updated_at"],
+            "size": file["size"]
+        }
 
 
 @router.get("/{file_id}", response_class=FileResponse)
