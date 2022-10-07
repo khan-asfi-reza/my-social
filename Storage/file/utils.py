@@ -3,16 +3,18 @@ import filetype
 from PIL import Image
 from fastapi import UploadFile, Request
 
+from Storage.prefix import FILE_API_PREFIX
 from Storage.utils import get_api_version
 
 MAX_WIDTH = 1400
 
 
-async def get_compressed_file(image: UploadFile) -> tuple[bytes | str, str, str]:
+async def get_compressed_file(image: UploadFile) -> tuple[bytes | str, str, str, int]:
     """
     Converts image to png
     """
     content = await image.read()
+    size = len(content)
     kind = filetype.guess(content)
     extension = image.filename.split(".")[-1]
     mime_type = "application/octet-stream"
@@ -32,7 +34,7 @@ async def get_compressed_file(image: UploadFile) -> tuple[bytes | str, str, str]
         extension = "webp"
     else:
         file = content
-    return file, mime_type, extension
+    return file, mime_type, extension, size
 
 
 def get_url(request: Request, path: str) -> str:
@@ -47,3 +49,10 @@ def get_url(request: Request, path: str) -> str:
     api_prefix = get_api_version()
     url += api_prefix + path
     return url
+
+
+def get_url_for_client(settings_api: str, *args):
+    if not settings_api.endswith("/"):
+        settings_api = settings_api + "/"
+    urls = "/".join(args)
+    return f"{settings_api}{FILE_API_PREFIX.replace('/', '')}/{urls}"
