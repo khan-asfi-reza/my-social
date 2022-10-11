@@ -3,7 +3,7 @@ import datetime
 from cryptography.fernet import Fernet
 from django.conf import settings
 from django.core.files import File
-from django.core.files.storage import Storage
+from django.core.files.storage import Storage as DjangoStorage
 from django.utils.deconstruct import deconstructible
 import json
 
@@ -11,13 +11,14 @@ from Storage.client import get_file, upload_file, delete_file, file_api_url
 
 
 @deconstructible
-class MySocialMediaStorage(Storage):
+class MySocialMediaStorage(DjangoStorage):
     """
     This storage service, uses the core Storage API
     While uploading any file the file returns json response
     the required data are converted into bytes and which is later converted to
     an encrypted string
     """
+
     def __init__(self):
         try:
             # Import API Endpoints from settings
