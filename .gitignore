@@ -1,5 +1,5 @@
-script.py
-setup.py
+script/script.py
+script/setup.py
 .DS_Store
 __pycache__
 emotionless.sqlite3
