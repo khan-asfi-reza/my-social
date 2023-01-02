@@ -1,3 +1,11 @@
+  
+  
+  
+  
+  
+  
+  
+  
 from django import forms
 from django.contrib.auth.forms import UserChangeForm
 
@@ -23,7 +31,7 @@ class UserAdminCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'phone_number', 'email', )
+        fields = ('username', 'phone_number', 'email',)
 
     # Clean Email, checks if email is used or not
     def clean_email(self):
@@ -88,7 +96,7 @@ class AdminCreationForm(UserAdminCreationForm):
 
     class Meta:
         model = User
-        fields = ('phone_number', 'email', 'username', )
+        fields = ('phone_number', 'email', 'username',)
 
     def save(self, commit=True):
         # Save the provided password in hashed format

@@ -1,3 +1,11 @@
+  
+  
+  
+  
+  
+  
+  
+  
 # django lib
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -6,13 +14,11 @@ from phonenumber_field.modelfields import PhoneNumberField
 # Relative app import
 from .manager import UserManager
 
-
 # Custom User Model
 from apps.core.models import UUIDBaseModel
 
 
 class User(AbstractUser, UUIDBaseModel):
-
     # Phone Number
     phone_number = PhoneNumberField(unique=True)
     # Check for verification
@@ -34,4 +40,3 @@ class User(AbstractUser, UUIDBaseModel):
 
     def __str__(self):
         return self.username
-

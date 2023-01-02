@@ -1,6 +1,6 @@
 from faker import Faker
 from factory.django import DjangoModelFactory
-from Accounts.models import User
+from apps.accounts import User
 from pytest_factoryboy import register
 
 faker = Faker()

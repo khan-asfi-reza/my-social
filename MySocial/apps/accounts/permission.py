@@ -1,3 +1,11 @@
+  
+  
+  
+  
+  
+  
+  
+  
 from rest_framework import permissions
 
 
@@ -7,6 +15,7 @@ class IsPostOrIsAuthenticated(permissions.BasePermission):
     allow authenticated user to view information
     otherwise anyone can create/post
     """
+
     def has_permission(self, request, view):
         # Allow Only Create
         if request.method == 'POST':

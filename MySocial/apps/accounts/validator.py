@@ -1,3 +1,9 @@
+  
+  
+  
+  
+  
+  
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 
@@ -6,6 +12,8 @@ from django.core.validators import RegexValidator
 def phone_number_validator(phone_number: str):
     """
     Validates Phone Number
+
+
     """
     if phone_number is None:
         raise ValidationError('User must have a phone number')
